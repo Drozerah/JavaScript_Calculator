@@ -58,6 +58,9 @@ body {
             background-color: transparent;
         }
     }
+    li:nth-child(3) {
+        font-size: 28px;
+    }
     li:nth-child(4) {
         width: 400px;
         font-size: 20px;
@@ -71,8 +74,4 @@ body {
 
 .action {
     font-size: 38px;
-}
-
-.reset {
-    font-size: 28px;
 }
