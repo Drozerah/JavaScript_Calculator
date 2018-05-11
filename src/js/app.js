@@ -1,20 +1,48 @@
 var Calculator = (function () {
-    var self = {};
 
     // Variables
-    var calculator = document.querySelector('.calculator'),
+    var self = {},
+        calculator = document.querySelector('.calculator'),
         display = calculator.querySelector('.display'),
         subDisplay = calculator.querySelector('.sub-display'),
         init = false,
-        that,
+        thisBtn,
         attributeName,
+        thisBtnValue,
         isBtn,
+        reduce,
         array = [];
 
 
     // private method
-    function arrayPush(elm) {
+    function arrayPush(str) {
+        
+        array.push(str);
 
+        reduce = array.reduce(function(a, b){
+            return a + b;
+        },'');
+
+        display.textContent = reduce;
+
+
+        if ( str == "add" ) {
+
+            var numbers = reduce.split("add");
+
+            console.log("numbers ",numbers);
+            
+        }
+
+        if ( str == "calculate" ) {
+            
+        }
+
+    }
+
+    function displayResult(){
+
+        console.log(array);
 
     }
 
@@ -24,24 +52,59 @@ var Calculator = (function () {
         // EventListener
         calculator.addEventListener('click', function (e) {
             
-            that = e.target;
-            attributeName = that.attributes[1].name; 
-            isBtn = that.classList["0"];
+            thisBtn = e.target;
+            attributeName = thisBtn.attributes[1].name;
+            thisBtnValue = thisBtn.getAttribute(attributeName);
+
+
+            isBtn = thisBtn.classList["0"];
 
             // is btn        
             if (isBtn == "btn") {
                 
                 // is key btn
                 if (attributeName == "data-btn-value") {
+    
+                    //console.log(thisBtn);
+                    //console.dir(thisBtn);
+                    //console.log(typeof thisBtnValue);
+                    //console.log(thisBtnValue);
+                    arrayPush(thisBtnValue);
                     
-                    console.log(that);
                            
                 }
 
                 // is action btn
                 if (attributeName == "data-btn-action") {
                     
-                    console.log(that);
+                    //console.log(thisBtn);
+                    //console.dir(thisBtn);
+                    //console.log(typeof thisBtnValue);
+
+                   
+
+                    if (thisBtnValue == "add" ||
+                        thisBtnValue == "multiply" ||
+                        thisBtnValue == "divide" ||
+                        thisBtnValue == "subtract" ) {
+
+                        console.log('** '+ thisBtnValue +' **');
+                        arrayPush(thisBtnValue);
+                        console.log(array);
+
+
+                    }
+
+
+                    if (thisBtnValue == "clear") {
+                        console.log('** clear **');
+                        display.textContent = "0";
+                        array = [];
+                    }
+
+                    if (thisBtnValue == "calculate") {
+                        displayResult();    
+                    }
                     
                 }
 
