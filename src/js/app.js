@@ -2,13 +2,18 @@ var Calculator = (function () {
     var self = {};
 
     // Variables
-    var init = false,
-        calculator,
-        isBtn;
+    var calculator = document.querySelector('.calculator'),
+        display = calculator.querySelector('.display'),
+        subDisplay = calculator.querySelector('.sub-display'),
+        init = false,
+        that,
+        attributeName,
+        isBtn,
+        array = [];
 
 
     // private method
-    function test() {
+    function arrayPush(elm) {
 
 
     }
@@ -16,27 +21,27 @@ var Calculator = (function () {
     // public method
     self.init = function () {
         
-        calculator = document.querySelector('.calculator');
-
-        
         // EventListener
-        calculator.addEventListener('click', function (elm) {
+        calculator.addEventListener('click', function (e) {
+            
+            that = e.target;
+            attributeName = that.attributes[1].name; 
+            isBtn = that.classList["0"];
 
-            isBtn = elm.target.classList["0"];
             // is btn        
             if (isBtn == "btn") {
                 
-                // is key
-                if (elm.target.attributes[1].name == "data-value") {
+                // is key btn
+                if (attributeName == "data-btn-value") {
                     
-                    console.log(elm.target);
-                    
+                    console.log(that);
+                           
                 }
 
-                // is action
-                if (elm.target.attributes[1].name == "data-action") {
+                // is action btn
+                if (attributeName == "data-btn-action") {
                     
-                    console.log(elm.target);
+                    console.log(that);
                     
                 }
 
