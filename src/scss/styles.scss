@@ -16,31 +16,20 @@ body {
     user-select: none;
 }
 
-.main {
+#main {
     background-color: #E7E7E7;
     width: 400px;
     margin: 0 auto;
     padding: 5px;
-    height: 600px;
+    height: 630px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
 
 // Caculator
-.calculator {
+#calculator {
     font-size: 30px;
     line-height: 100px;
-    .display {
-        text-align: right;
-        padding-right: 40px;
-        font-size: 40px;
-        height: 100px;
-        line-height: 100px;
-        background-color: #E7E7E7;
-    }
-    .sub-display{
-        text-align: right;
-        padding-right: 40px;
-    }
+
     li.btn {
         position: relative;
         float: left;
@@ -69,6 +58,23 @@ body {
         span {
             padding: 10px;
         }
+    }
+    #display {
+        text-align: right;
+        padding-right: 40px;
+        font-size: 40px;
+        height: 100px;
+        line-height: 100px;
+        background-color: #E7E7E7;
+    }
+    #sub-display{
+        text-align: right;
+        padding-right: 45px;
+        $subDisplay-size : 22px;
+        font-size: $subDisplay-size;
+        height: 30px;
+        line-height: $subDisplay-size;
+        color:#333;
     }
 }
 

@@ -13,28 +13,28 @@
 <body>
     <br />
     <br />
-    <div class="main">
-        <ul class="calculator">
-            <li class="display">0</li>
-            <li class="sub-display">0</li>
+    <div id="main">
+        <ul class="calculator" id="calculator">
+            <li id="display">0</li>
+            <li id="sub-display">0</li>
             <li class="btn action" data-btn-action="clear">AC</li>
-            <li class="title"><span>Calculator [DEV]</span></li>   
+            <li id="title"><span>Calculator [DEV]</span></li>   
             <li class="btn key" data-btn-value="7">7</li>
             <li class="btn key" data-btn-value="8">8</li>
             <li class="btn key" data-btn-value="9">9</li>
-            <li class="btn action" data-btn-action="subtract">-</li>
+            <li class="btn action" data-btn-action="-">-</li>
             <li class="btn key" data-btn-value="4">4</li>
             <li class="btn key" data-btn-value="5">5</li>
             <li class="btn key" data-btn-value="6">6</li>
-            <li class="btn action" data-btn-action="divide">÷</li>
+            <li class="btn action" data-btn-action="/">÷</li>
             <li class="btn key" data-btn-value="1">1</li>
             <li class="btn key" data-btn-value="2">2</li>
             <li class="btn key" data-btn-value="3">3</li>
-            <li class="btn action" data-btn-action="multiply">&times;</li>
+            <li class="btn action" data-btn-action="*">&times;</li>
             <li class="btn key" data-btn-value="0">0</li>
             <li class="btn key" data-btn-value=".">.</li>
-            <li class="btn action" data-btn-action="calculate">=</li>
-            <li class="btn action" data-btn-action="add">+</li>
+            <li class="btn action" data-btn-action="=">=</li>
+            <li class="btn action" data-btn-action="+">+</li>
         </ul>
     </div>
 
@@ -43,7 +43,7 @@
     <script src="src/js/app.js"></script>
     <!-- <script src="src/js/app.js"></script> -->
     <script>
-        // Ready DOM
+        // Ready DOM 
         (function () {
             Calculator.init();
         })();
