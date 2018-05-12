@@ -69,10 +69,10 @@ body {
     }
     #sub-display{
         text-align: right;
-        padding-right: 45px;
-        $subDisplay-size : 22px;
+        $subDisplay-size : 35px;
+        padding-right: $subDisplay-size + 6px;
         font-size: $subDisplay-size;
-        height: 30px;
+        height: 100px;
         line-height: $subDisplay-size;
         color:#333;
     }
