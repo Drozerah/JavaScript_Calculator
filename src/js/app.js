@@ -16,10 +16,10 @@ var Calculator = (function () {
         splits = [],
         result;
 
-        // fix onfocus bug
-        calculator.onfocus = function() {
-            this.blur();
-        };    
+    // fix onfocus bug
+    calculator.onfocus = function() {
+        this.blur();
+    };    
         
 
     // private method
@@ -75,7 +75,34 @@ var Calculator = (function () {
 
     function calculate(fn) {
         console.log('array',array);
+        
         return new Function('return ' + fn)();
+    }
+
+    function arrayNumReducer(array){
+
+        var accumulator = [],
+            output = [];
+        
+        for (var i = 0; i < array.length; i++) {
+        
+        if (!(array[i] == '+' || array[i] == '*' || array[i] == '/' || array[i] == '-')) {
+            
+            accumulator.push(array[i]);        
+            
+        } else {
+    
+            output.push(Number(accumulator.join('')));
+            output.push(array[i]);
+            accumulator = [];
+    
+        }    
+        
+        }
+        output.push(Number(accumulator.join('')));
+        
+        return output;
+    
     }
 
     // public method
@@ -141,10 +168,20 @@ var Calculator = (function () {
                         // unfreaze decimal btn
                         isDecimalFrozen = false;
 
-                        result =  calculate(reduce);
-
+                        result = calculate(reduce);
+                        
+                        // round result
+                        // 2 decimal round
+                        result = Math.round(result * 100) / 100;
+                        // 3 decimal round
+                        //result = Math.round(result * 1000) / 1000;
+                        // 4 decimal round
+                        //result = Math.round(result * 10000) / 10000;
+                        
                         display.textContent = result;
                         subDisplay.textContent += thisBtnValue + result;
+
+                        console.log('arrayNumReducer',arrayNumReducer(array));
 
                     }
 
