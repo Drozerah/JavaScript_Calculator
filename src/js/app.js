@@ -167,7 +167,7 @@ var Calculator = (function () {
 
                         // unfreaze decimal btn
                         isDecimalFrozen = false;
-
+                        // https://stackoverflow.com/questions/13077923/how-can-i-convert-a-string-into-a-math-operator-in-javascript
                         result = calculate(reduce);
                         
                         // round result
