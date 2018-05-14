@@ -53,7 +53,6 @@ var Calculator = (function () {
 
         }
 
-
         // si on tappe une touche d'opération
         //  on détermine la deuxieme serie de chiffres 
         if (str == "+" ||
@@ -175,7 +174,6 @@ var Calculator = (function () {
                     // is key btn
                     if (attributeName == "data-btn-value") {
 
-
                         // key btn is not decimal 
                         if (thisBtnValue !== ".") {
 
@@ -192,6 +190,7 @@ var Calculator = (function () {
                                 isDecimalFrozen = true;
 
                             } else {
+
                                 console.log('the decimal btn is frozen');
 
                             }
@@ -200,7 +199,6 @@ var Calculator = (function () {
 
                     // is operator btn
                     if (attributeName == "data-btn-action") {
-
 
                         // operators action
                         if (thisBtnValue == "+" ||
