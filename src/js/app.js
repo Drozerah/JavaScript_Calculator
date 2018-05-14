@@ -18,7 +18,9 @@ var Calculator = (function () {
 
     // fix onfocus bug
     calculator.onfocus = function () {
+
         this.blur();
+
     };
 
     // private method
@@ -32,20 +34,26 @@ var Calculator = (function () {
         console.log('=>', str);
 
         reduce = array.reduce(function (a, b) {
+
             return a + b;
+
         }, '');
 
         // on affiche toutes les saisies en live
         // 1 dans le cas de la première serie
         if (typeof splits == "undefined") {
+
             display.textContent = reduce;
             subDisplay.textContent = reduce;
+
         } else { // 2e serie
 
             // si init = false on vide le texte
             if (!init) {
+
                 display.textContent = '';
                 init = true;
+
             }
 
             display.textContent = display.textContent + str;
@@ -111,14 +119,14 @@ var Calculator = (function () {
         // sort operators and numbers using a dispatcher.
         //      1 - sort the indexes by types in 2 new arrays
         //      [3, "+", 5, "/", 2, "*", 3] => [3, 5, 2, 3] & ["+", "/", "*"]
-      
+
         var numbers = [];
         var operators = [];
 
         for (var i = 0; i < array.length; i++) {
 
-            
-            if (typeof array[i] === 'number') { 
+
+            if (typeof array[i] === 'number') {
 
                 // type === number
                 numbers.push(array[i]);
@@ -173,6 +181,7 @@ var Calculator = (function () {
         while (i < operators.length);
 
         result = numbers[0];
+
         // round result
         // 2 decimal round
         result = Math.round(result * 100) / 100;
@@ -218,13 +227,17 @@ var Calculator = (function () {
                             // if isDecimalFrozen = false is true
                             // the btn is not frozen
                             if (!isDecimalFrozen) {
+
                                 console.log('the decimal btn is not frozen');
+
                                 updateArray(thisBtnValue);
-                                // freaze 
+
+                                // freaze decimal btn
                                 isDecimalFrozen = true;
 
                             } else {
 
+                                // todo remove 
                                 console.log('the decimal btn is frozen');
 
                             }
@@ -241,6 +254,7 @@ var Calculator = (function () {
                             thisBtnValue == "-") {
 
                             console.log('** ' + thisBtnValue + ' **');
+
                             updateArray(thisBtnValue);
 
                         }
@@ -251,7 +265,7 @@ var Calculator = (function () {
                             // unfreaze decimal btn
                             isDecimalFrozen = false;
                             // https://stackoverflow.com/questions/13077923/how-can-i-convert-a-string-into-a-math-operator-in-javascript
-                            
+
                             result = execute(arrayConverter(array));
 
                             display.textContent = result;
@@ -262,11 +276,14 @@ var Calculator = (function () {
 
                         // clear action
                         if (thisBtnValue == "clear") {
+
                             console.log('** clear **');
+
                             subDisplay.textContent = "0";
                             display.textContent = "0";
                             array = [];
                             init = false;
+
                             console.log('clear init =', init);
                         }
 
