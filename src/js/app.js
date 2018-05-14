@@ -100,6 +100,8 @@ var Calculator = (function () {
 
     function getResult(array) {
 
+        console.log(array);
+
         // happy path
 
         var numbers = [];
@@ -146,7 +148,7 @@ var Calculator = (function () {
         // 4 decimal round
         //result = Math.round(result * 10000) / 10000;
 
-        console.log("result=>", result);
+        console.log("result =>", result);
 
         return result;
 
@@ -221,6 +223,7 @@ var Calculator = (function () {
                             result = getResult(arrayNumReducer(array));
 
                             display.textContent = result;
+                            // subDisplay.textContent = 'answ' + thisBtnValue + result;
                             subDisplay.textContent += thisBtnValue + result;
 
                         }
