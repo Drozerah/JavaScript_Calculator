@@ -13,7 +13,8 @@ var Calculator = (function () {
         isBtn,
         reduce,
         array = [],
-        splits = [],
+        isOperator = false,
+        isExecuted = false,
         result;
 
     // fix onfocus bug
@@ -33,48 +34,63 @@ var Calculator = (function () {
 
         console.log('=>', str);
 
+        // Display live results on screen from array 
+        // reduce array and return a string 
         reduce = array.reduce(function (a, b) {
 
             return a + b;
 
         }, '');
 
-        // on affiche toutes les saisies en live
-        // 1 dans le cas de la première serie
-        if (typeof splits == "undefined") {
 
+        // path 1 - first serie
+        // display both main and sub text content before an operator btn is clicked
+        // if isOperator == true so, an operator has allready been clicked
+        if (isOperator) {
+        
             display.textContent = reduce;
             subDisplay.textContent = reduce;
 
-        } else { // 2e serie
+        } else { 
 
-            // si init = false on vide le texte
+            // path 2 - second serie
+            // update text content after an operator btn is clicked
+
+            // if variable init = false
             if (!init) {
-
+                
+                // empty main text content
                 display.textContent = '';
+
+                // turn init to true
                 init = true;
 
             }
 
+            // update both main and sub text content
             display.textContent = display.textContent + str;
             subDisplay.textContent = reduce;
 
         }
 
-        // si on tappe une touche d'opération
-        //  on détermine la deuxieme serie de chiffres 
+        // path 2 - second serie
+        // update text content when an operator btn is clicked
+        // split reduce string to indicate an operator has been cliked to path 1 
         if (str == "+" ||
             str == "*" ||
             str == "/" ||
             str == "-") {
 
+            // update main text content    
             display.textContent = str;
+
+            // turn init to false to fill main text content again 
             init = false
-            // on eclate la chaine de caractère
-            //  dans un tableau 
-            splits = reduce.split(str);
-            // si la longeur du tableau est 
-            // supérieure à 3
+
+            // turn to true so we know when an operator is cliked
+            isOperator = true;
+            console.log("isOperator", isOperator);
+
         }
 
     }
@@ -182,15 +198,19 @@ var Calculator = (function () {
 
         result = numbers[0];
 
-        // round result
-        // 2 decimal round
+        // rounded result options
+        // 2 decimal
         result = Math.round(result * 100) / 100;
-        // 3 decimal round
+        // 3 decimal
         //result = Math.round(result * 1000) / 1000;
-        // 4 decimal round
+        // 4 decimal
         //result = Math.round(result * 10000) / 10000;
 
         console.log("result =>", result);
+
+        // turn to true so we know an aperation is done
+        isExecuted = true;
+        console.log("isExecuted =", isExecuted);
 
         return result;
 
@@ -253,7 +273,7 @@ var Calculator = (function () {
                             thisBtnValue == "/" ||
                             thisBtnValue == "-") {
 
-                            console.log('** ' + thisBtnValue + ' **');
+                            //console.log('** ' + thisBtnValue + ' **');
 
                             updateArray(thisBtnValue);
 
@@ -283,8 +303,11 @@ var Calculator = (function () {
                             display.textContent = "0";
                             array = [];
                             init = false;
-
                             console.log('clear init =', init);
+
+                            isExecuted = false;
+                            console.log("isExecuted =", isExecuted);
+
                         }
 
                         // unfreaze decimal btn
