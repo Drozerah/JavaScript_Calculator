@@ -22,7 +22,7 @@ var Calculator = (function () {
     };
 
     // private method
-    function arrayPush(str) {
+    function updateArray(str) {
 
         // generer la concaténation 
         //  des chiffres pour affichage en live
@@ -177,7 +177,7 @@ var Calculator = (function () {
                         // key btn is not decimal 
                         if (thisBtnValue !== ".") {
 
-                            arrayPush(thisBtnValue);
+                            updateArray(thisBtnValue);
 
                         } else { // key btn is decimal
 
@@ -185,7 +185,7 @@ var Calculator = (function () {
                             // the btn is not frozen
                             if (!isDecimalFrozen) {
                                 console.log('the decimal btn is not frozen');
-                                arrayPush(thisBtnValue);
+                                updateArray(thisBtnValue);
                                 // freaze 
                                 isDecimalFrozen = true;
 
@@ -207,7 +207,7 @@ var Calculator = (function () {
                             thisBtnValue == "-") {
 
                             console.log('** ' + thisBtnValue + ' **');
-                            arrayPush(thisBtnValue);
+                            updateArray(thisBtnValue);
 
                         }
 
@@ -248,5 +248,5 @@ var Calculator = (function () {
     };
 
     return self;
-    
+
 })();
