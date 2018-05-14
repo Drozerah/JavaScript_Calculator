@@ -155,10 +155,8 @@ var Calculator = (function () {
     // public method
     self.init = function () {
 
-
         // EventListener
         calculator.addEventListener('click', function (e) {
-
 
             // element has data attributes 
             if ((e.target.getAttribute("data-btn-value") || e.target.getAttribute("data-btn-action"))) {
@@ -225,8 +223,6 @@ var Calculator = (function () {
                             display.textContent = result;
                             subDisplay.textContent += thisBtnValue + result;
 
-                            
-
                         }
 
                         // clear action
@@ -246,9 +242,11 @@ var Calculator = (function () {
 
                 }
 
-            }
+            } // end listener
+
         })
     };
 
     return self;
+    
 })();
