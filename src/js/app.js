@@ -71,7 +71,12 @@ var Calculator = (function () {
 
     }
 
-    function arrayNumReducer(array) {
+    function arrayConverter(array) {
+
+        // convert the indexes from strings to numbers 
+        //      if they are not operators 
+        //      ["3", "+", "5", "/", "2", "*", "3"] => [3, "+", 5, "/", 2, "*", 3]
+        //      return new array
 
         var accumulator = [],
             output = [];
@@ -91,49 +96,78 @@ var Calculator = (function () {
             }
 
         }
+
         output.push(Number(accumulator.join('')));
 
         return output;
 
     }
 
-    function getResult(array) {
+    function execute(array) {
 
         console.log(array);
 
         // happy path
-
+        // sort operators and numbers using a dispatcher.
+        //      1 - sort the indexes by types in 2 new arrays
+        //      [3, "+", 5, "/", 2, "*", 3] => [3, 5, 2, 3] & ["+", "/", "*"]
+      
         var numbers = [];
         var operators = [];
 
         for (var i = 0; i < array.length; i++) {
 
-            // type === numbers
-            if (typeof array[i] === 'number') {
+            
+            if (typeof array[i] === 'number') { 
+
+                // type === number
                 numbers.push(array[i]);
-            } else { // is a string
+
+            } else {
+
+                // else type === string
                 operators.push(array[i]);
+
             }
 
         }
+
+        // depending on the operator 
+        //      the first index become the mathematical
+        //      operations result between the indexes 0 and 1
+        //      then, the second index is removed from the array.
+        //      The array length of operators indicates how many 
+        //      iterations are needed to complete the mathematical task 
+        //      until the end which is executed with a do while loop.
+        //      ["+", "/", "*"] => .length = 3 operations/iterations
+        //      [3, 5, 2, 3] => [8, 2, 3] => [4, 3] => [12]
 
         var i = 0;
         do {
 
             if (operators[i] == "+") {
+
                 numbers[0] = numbers[0] + numbers[1];
+
             }
             if (operators[i] == "-") {
+
                 numbers[0] = numbers[0] - numbers[1];
+
             }
             if (operators[i] == "*") {
+
                 numbers[0] = numbers[0] * numbers[1];
+
             }
             if (operators[i] == "/") {
+
                 numbers[0] = numbers[0] / numbers[1];
+
             }
 
             numbers.splice(1, 1);
+
             i++;
         }
         while (i < operators.length);
@@ -218,7 +252,7 @@ var Calculator = (function () {
                             isDecimalFrozen = false;
                             // https://stackoverflow.com/questions/13077923/how-can-i-convert-a-string-into-a-math-operator-in-javascript
                             
-                            result = getResult(arrayNumReducer(array));
+                            result = execute(arrayConverter(array));
 
                             display.textContent = result;
                             // subDisplay.textContent = 'answ' + thisBtnValue + result;
