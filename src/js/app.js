@@ -5,8 +5,9 @@ var Calculator = (function () {
         calculator = document.getElementById('calculator'),
         display = document.getElementById('display'),
         subDisplay = document.getElementById('sub-display'),
-        init = false,
-        isDecimalFrozen = false,
+        isInit = false,
+        isDecimalActive = true,
+        isBtnNumActive = true,
         thisBtn,
         attributeName,
         thisBtnValue,
@@ -15,7 +16,9 @@ var Calculator = (function () {
         array = [],
         isOperator = false,
         isExecuted = false,
+        current,
         result;
+
 
     // fix onfocus bug
     calculator.onfocus = function () {
@@ -32,7 +35,8 @@ var Calculator = (function () {
 
         array.push(str);
 
-        console.log('=>', str);
+        current = str;
+            console.log('current =>', current);
 
         // Display live results on screen from array 
         // reduce array and return a string 
@@ -45,33 +49,26 @@ var Calculator = (function () {
 
         // path 1 - first serie
         // display both main and sub text content before an operator btn is clicked
-        // if isOperator == true so, an operator has allready been clicked
-        if (isOperator) {
-        
-            display.textContent = reduce;
-            subDisplay.textContent = reduce;
-
-        } else { 
+        // if isOperator == false so, an operator has allready been clicked
 
             // path 2 - second serie
             // update text content after an operator btn is clicked
 
-            // if variable init = false
-            if (!init) {
-                
+            // if variable isInit = false
+            if (!isInit) {
+
                 // empty main text content
                 display.textContent = '';
 
-                // turn init to true
-                init = true;
+                // turn isInit to true
+                isInit = true;
 
             }
 
             // update both main and sub text content
-            display.textContent = display.textContent + str;
+            //display.textContent = display.textContent + str;
+            display.textContent += current;
             subDisplay.textContent = reduce;
-
-        }
 
         // path 2 - second serie
         // update text content when an operator btn is clicked
@@ -84,14 +81,16 @@ var Calculator = (function () {
             // update main text content    
             display.textContent = str;
 
-            // turn init to false to fill main text content again 
-            init = false
+            // turn isInit to false to fill main text content again 
+            isInit = false
 
-            // turn to true so we know when an operator is cliked
-            isOperator = true;
-            console.log("isOperator", isOperator);
+            // turn to false so we know when an operator is cliked
+            isOperator = false;
+                console.log("isOperator", isOperator);
 
         }
+        
+
 
     }
 
@@ -205,13 +204,26 @@ var Calculator = (function () {
         //result = Math.round(result * 1000) / 1000;
         // 4 decimal
         //result = Math.round(result * 10000) / 10000;
-
-        console.log("result =>", result);
+            console.log("result =>", result);
 
         // turn to true so we know an aperation is done
         isExecuted = true;
-        console.log("isExecuted =", isExecuted);
+            console.log("isExecuted =", isExecuted);
 
+        // update array
+        array = [result];
+            console.log('array => ',array);
+        
+        // update main text content
+        display.textContent = result;
+
+        // update sub text content
+        // text options               
+         subDisplay.textContent += thisBtnValue + result; // => '1+1=2'
+        // subDisplay.textContent = 'answ' + thisBtnValue + result; // => 'answ=2'
+        //subDisplay.textContent += thisBtnValue; // => '1+1='
+
+        // return the final mathematical operation result
         return result;
 
     }
@@ -237,81 +249,132 @@ var Calculator = (function () {
                     // is key btn
                     if (attributeName == "data-btn-value") {
 
-                        // key btn is not decimal 
+                        // unlock operator btn
+                        isOperator = true;
+
+                        // key btn is number
                         if (thisBtnValue !== ".") {
 
                             updateArray(thisBtnValue);
 
-                        } else { // key btn is decimal
+                        }
 
-                            // if isDecimalFrozen = false is true
-                            // the btn is not frozen
-                            if (!isDecimalFrozen) {
+                        // key btn is decimal
+                        if (thisBtnValue == ".") {
 
-                                console.log('the decimal btn is not frozen');
+                            // if decimal's btn is active
+                            if (isDecimalActive) {
 
+                                // update array
                                 updateArray(thisBtnValue);
 
-                                // freaze decimal btn
-                                isDecimalFrozen = true;
-
-                            } else {
-
-                                // todo remove 
-                                console.log('the decimal btn is frozen');
+                                // deactivate decimal's btn 
+                                isDecimalActive = false;
+                                console.log("isDecimalActive =", isDecimalActive);
 
                             }
+
+                            // if first entry is decimal
+                            // remove "." update array to "0" and "."
+                            if (array[0] == ".") {
+
+                                // empty array
+                                array = [];
+
+                                // empty main text content
+                                display.textContent = "";
+
+                                // update array
+                                updateArray("0");
+                                updateArray(".");
+                            }
                         }
+
                     }
 
                     // is operator btn
                     if (attributeName == "data-btn-action") {
 
-                        // operators action
-                        if (thisBtnValue == "+" ||
-                            thisBtnValue == "*" ||
-                            thisBtnValue == "/" ||
-                            thisBtnValue == "-") {
+                        // if operator's keyboard activated
+                        if (isOperator) {
 
-                            //console.log('** ' + thisBtnValue + ' **');
+                            // if operators action
+                            if (thisBtnValue == "+" ||
+                                thisBtnValue == "*" ||
+                                thisBtnValue == "/" ||
+                                thisBtnValue == "-") {
 
-                            updateArray(thisBtnValue);
+                                // deactivate number's keyboard
+                                isBtnNumActive = false;
 
-                        }
+                                // if decimal's btn is clicked
+                                if (current == '.') {
 
-                        // calculate action
-                        if (thisBtnValue == "=") {
+                                    // deactivate decimal's btn
+                                    isDecimalActive = false;
 
-                            // unfreaze decimal btn
-                            isDecimalFrozen = false;
-                            // https://stackoverflow.com/questions/13077923/how-can-i-convert-a-string-into-a-math-operator-in-javascript
+                                } else {
 
-                            result = execute(arrayConverter(array));
+                                    // update array
+                                    updateArray(thisBtnValue);
 
-                            display.textContent = result;
-                            // subDisplay.textContent = 'answ' + thisBtnValue + result;
-                            subDisplay.textContent += thisBtnValue + result;
+                                    // activate decimal's btn
+                                    isDecimalActive = true;
 
-                        }
+                                }
+                            }
 
-                        // clear action
+
+                            // calculate action
+                            if (thisBtnValue == "=") {
+
+                                // activate decimal's btn
+                                isDecimalActive = true;
+                                console.log("isDecimalActive = ", isDecimalActive);
+
+                                // deactivate number's keyboard
+                                isBtnNumActive = false;
+
+                                // calculate the result
+                                result = execute(arrayConverter(array));
+
+                            }
+                        } //
+
+
+                        // clear action|| isBtnNumActive == false
                         if (thisBtnValue == "clear") {
 
-                            console.log('** clear **');
+                            console.log('** Clear **');
 
+                            // update both main and sub text content
                             subDisplay.textContent = "0";
                             display.textContent = "0";
-                            array = [];
-                            init = false;
-                            console.log('clear init =', init);
 
+                            // empty the array
+                            array = [];
+                            console.log('array => ', array);
+
+                            // turn isInit to false    
+                            isInit = false;
+                            console.log('isInit = ', isInit);
+
+                            // activate decimal's btn
+                            isDecimalActive = true;
+                            console.log("isDecimalActive = ", isDecimalActive);
+
+                            // turn isExecuted to false
                             isExecuted = false;
-                            console.log("isExecuted =", isExecuted);
+                            console.log("isExecuted = ", isExecuted);
+
+                            // activate numbers keyboard
+                            isBtnNumActive = true;
+
+                            console.log('*************');
 
                         }
 
-                        // unfreaze decimal btn
-                        isDecimalFrozen = false;
+
 
                     }
 
@@ -319,7 +382,13 @@ var Calculator = (function () {
 
             } // end listener
 
+            // console.log('** Any Btn **');
+            // console.log("isDecimalActive =", isDecimalActive);
+            // console.log('array => ',array);
+            // console.log('*************');
+
         })
+
     };
 
     return self;
