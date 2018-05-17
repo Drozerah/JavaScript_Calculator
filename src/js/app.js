@@ -76,11 +76,12 @@ var Calculator = (function () {
 
                 // update subDisplay
                 subDisplay.textContent = 'Digit Limit Met';
+
                 // clear
                 clear();
+
                 // update display
                 display.textContent = '0';
-                console.log("<<<<<<<<<<<<<<<<<<<", isOperator);
 
             }
 
@@ -92,14 +93,18 @@ var Calculator = (function () {
                 display.textContent = str;
 
                 // if an execution has already happened
-                // update array & subDisplay
+                //      update array & subDisplay
                 if (isExecuted) {
+
                     // empty existing array
                     array = [];
+
                     // push execution result
                     array.push(result.toString());
+
                     // push the operator string
                     array.push(str);
+
                     console.log("array is executed ===>", array);
                 }
 
@@ -148,8 +153,7 @@ var Calculator = (function () {
 
     function execute(array) {
 
-        // happy path
-        // sort operators and numbers using a dispatcher.
+        // sort operators and numbers using kind of a dispatcher.
         //      1 - sort the indexes by types in 2 new arrays
         //      [3, "+", 5, "/", 2, "*", 3] => [3, 5, 2, 3] & ["+", "/", "*"]
 
@@ -179,7 +183,7 @@ var Calculator = (function () {
         //      then, the second index is removed from the array.
         //      The array length of operators indicates how many 
         //      iterations are needed to complete the mathematical task 
-        //      until the end which is executed with a do while loop.
+        //      until the end. The task is executed with a do while loop.
         //      ["+", "/", "*"] => .length = 3 operations/iterations
         //      [3, 5, 2, 3] => [8, 2, 3] => [4, 3] => [12]
 
@@ -213,7 +217,9 @@ var Calculator = (function () {
         }
         while (i < operators.length);
 
+
         console.log("------ EXECUTE ------");
+
         // turn to true so we know an aperation is done
         isExecuted = true;
         console.log("isExecuted =", isExecuted);
@@ -312,7 +318,7 @@ var Calculator = (function () {
             // element has data attributes 
             if ((e.target.getAttribute("data-btn-value") || e.target.getAttribute("data-btn-action"))) {
                 
-                // data attribute exist or is empty
+                // data attribute exists or is empty
 
                 thisBtn = e.target;
                 attributeName = thisBtn.attributes[1].name;
@@ -325,16 +331,19 @@ var Calculator = (function () {
                     // is key btn
                     if (attributeName == "data-btn-value") {
 
-                        // if the array is empty and
-                        // if the first value is "0" or "."  then, the operators are first disabled
+                        // if the array is empty and if the first value is "0" or "."
+                        //      then, the operators are first disabled
                         if (array.length == 0 && (thisBtnValue == "0" || thisBtnValue == ".") ) {
 
+                            // deactivate operators btn
                             isOperator = false;
+
                             // deactivate decimal's btn
                             isDecimalActive = false;
 
                             // if thisBtnValue == "." then
                             if (thisBtnValue == "."){
+
                                 // update array
                                 updateArray("0");
                                 updateArray(".");
@@ -348,7 +357,7 @@ var Calculator = (function () {
                             // activate execute btn
                             isExecuteActive = true;
 
-                            // if an key btn is clicked just after an execution
+                            // if a key btn is clicked just after an execution
                             if (isExecuted) {
 
                                 // call clear method
@@ -356,14 +365,14 @@ var Calculator = (function () {
                                 
                             }
 
-                            // key btn is number
+                            // if key btn is number
                             if (thisBtnValue !== ".") {
 
                                 updateArray(thisBtnValue);
 
                             }
 
-                            // key btn is decimal
+                            // if key btn is decimal
                             if (thisBtnValue == ".") {
 
                                 // if decimal's btn is active
@@ -379,17 +388,17 @@ var Calculator = (function () {
 
                                 }
 
-                                // if first entry is decimal
-                                // remove "." update array to "0" and "."
+                                // if first entry is decimal, remove "."
+                                //      update array to "0" and "."
                                 if (array[0] == ".") {
 
-                                    // empty array
+                                    // empty the array
                                     array = [];
 
-                                    // empty main text content
+                                    // empty the main text content
                                     display.textContent = "";
 
-                                    // update array
+                                    // update the array
                                     updateArray("0");
                                     updateArray(".");
                                 }
@@ -397,9 +406,9 @@ var Calculator = (function () {
 
 
                             // fix entry 
-                            // [..."+","."] => [..."+","0","."]
-                            // if the current value is "." and if the previous value is 
-                            // an operator, 0 is missing so we add it
+                            //      [..."+","."] => [..."+","0","."]
+                            //      if the current value is "." and if the previous value is 
+                            //      an operator, a 0 is missing so we add it
                             var lastOperator = array[array.length - 2];
 
                             if ((thisBtnValue == ".") && (lastOperator == "+" || lastOperator == "*" || lastOperator == "/" || lastOperator == "-")) {
@@ -430,7 +439,7 @@ var Calculator = (function () {
                             isOperator = false;
 
                         }
-                        // if operator's keyboard activated
+                        // if operator's keyboard is activated
                         if (isOperator) {
                             
                             // if operators action
@@ -464,7 +473,7 @@ var Calculator = (function () {
                                 // if an operator is clicked just after an execution
                                 if (isExecuted) {
 
-                                    // reference existing result in new variable
+                                    // reference the existing result in new variable
                                     var lastResult = result;
 
                                     // call clear method
