@@ -69,7 +69,7 @@ var Calculator = (function () {
             // update both display and subDisplay
             display.textContent += str;
             subDisplay.textContent = reduce;
-            
+
 
             // Digit Limit
             if (display.textContent.length > 10) {
@@ -236,16 +236,16 @@ var Calculator = (function () {
         console.log("result =>", result);
 
         // if result = infinity, case number ÷ 0 
-        if (result == "Infinity" ) {       
+        if (result == "Infinity") {
             result = 0;
         }
         // if result = NaN, case 0 ÷ 0
         if (isNaN(result)) {
             result = 0;
             subDisplay.textContent = "Error";
-    
+
         }
-        
+
         // update array
         array = [];
         array.push(result);
@@ -317,7 +317,7 @@ var Calculator = (function () {
 
             // element has data attributes 
             if ((e.target.getAttribute("data-btn-value") || e.target.getAttribute("data-btn-action"))) {
-                
+
                 // data attribute exists or is empty
 
                 thisBtn = e.target;
@@ -333,7 +333,7 @@ var Calculator = (function () {
 
                         // if the array is empty and if the first value is "0" or "."
                         //      then, the operators are first disabled
-                        if (array.length == 0 && (thisBtnValue == "0" || thisBtnValue == ".") ) {
+                        if (array.length == 0 && (thisBtnValue == "0" || thisBtnValue == ".")) {
 
                             // deactivate operators btn
                             isOperator = false;
@@ -342,7 +342,7 @@ var Calculator = (function () {
                             isDecimalActive = false;
 
                             // if thisBtnValue == "." then
-                            if (thisBtnValue == "."){
+                            if (thisBtnValue == ".") {
 
                                 // update array
                                 updateArray("0");
@@ -362,7 +362,7 @@ var Calculator = (function () {
 
                                 // call clear method
                                 clear();
-                                
+
                             }
 
                             // if key btn is number
@@ -429,10 +429,10 @@ var Calculator = (function () {
 
                     }
 
-                  
+
                     // is operator btn
                     if (attributeName == "data-btn-action") {
-                        
+
                         // if Digit Limit Met 
                         if (subDisplay.textContent == 'Digit Limit Met') {
 
@@ -441,7 +441,7 @@ var Calculator = (function () {
                         }
                         // if operator's keyboard is activated
                         if (isOperator) {
-                            
+
                             // if operators action
                             if (thisBtnValue == "+" || thisBtnValue == "*" || thisBtnValue == "/" || thisBtnValue == "-") {
 
@@ -451,13 +451,13 @@ var Calculator = (function () {
                                 // if ["0", "."] => ["0", "operator"]
                                 if (array.length == 2 && (array[0] == "0" && array[1] == ".")) {
 
-                                    array[array.length-1] = thisBtnValue;
+                                    array[array.length - 1] = thisBtnValue;
                                     subDisplay.textContent = "0";
                                     display.textContent = thisBtnValue;
                                     isInit = false;
                                     isOperator = false;
                                     isExecuteActive = false;
-                                    
+
                                     console.log("current =>", thisBtnValue);
 
                                 } else {
