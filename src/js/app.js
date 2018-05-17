@@ -8,6 +8,7 @@ var Calculator = (function () {
         isInit = false,
         isDecimalActive = true,
         isBtnNumActive = true,
+        isExecuteActive = true,
         thisBtn,
         attributeName,
         thisBtnValue,
@@ -17,12 +18,10 @@ var Calculator = (function () {
         isOperator = false,
         isExecuted = false,
         current,
-        result,
-        errorString,
-        fixedString;
+        result;
 
 
-    // fix onfocus bug
+    // fix onfocus issue
     calculator.onfocus = function () {
 
         this.blur();
@@ -34,67 +33,64 @@ var Calculator = (function () {
 
 
         // Display live results on screen from array 
-        
+
         // update array
         array.push(str);
-  
+
         current = str;
+        //current = current.replace("/", "÷").replace("*", "×");
         console.log('current =>', current);
-        
+
         // stringify array 
         // reduce array and return a string 
         reduce = array.reduce(function (a, b) {
 
-            return a + b;
+            return a + b.replace("/", "÷").replace("*", "×");
 
         }, '');
 
-        // fix operator character
-        reduce = reduce.replace("/", "÷").replace("*", "×");
-        
         // remove default zero
         // if isInit = false
-        if (isInit == false) {
+        if (!isInit) {
 
             // empty main text content
             display.textContent = '';
             subDisplay.textContent = '';
-            
+
             // turn isInit to true
             isInit = true;
-            
-            console.log('Zero removed isInit = ',isInit);
+
         }
-        
+
         // if isInit = true
         if (isInit) {
 
-            console.log("B");
-            console.log("B result", result);
-            console.log('B isInit',isInit);
-            console.log("B isOperator", isOperator);
-            console.log("B array", array);
 
+            // update both display and subDisplay
             display.textContent += str;
             subDisplay.textContent = reduce;
+            
 
-            var displayedStr = display.textContent;
-            if (displayedStr.length >= 12) {
+            // Digit Limit
+            if (display.textContent.length > 10) {
 
-                
-                console.log("!!!!!!!!!!!!", displayedStr.length);
+                // update subDisplay
                 subDisplay.textContent = 'Digit Limit Met';
+                // clear
                 clear();
+                // update display
                 display.textContent = '0';
-            }
-            
-            
-            
-            if (str == "+" ||str == "*" || str == "/" || str == "-") {
+                console.log("<<<<<<<<<<<<<<<<<<<", isOperator);
 
-                // update main text content + fix characters    
-                display.textContent = str.replace("/", "÷").replace("*", "×");
-                
+            }
+
+
+            if (str == "+" || str == "*" || str == "/" || str == "-") {
+
+
+                // update display text content 
+                display.textContent = str;
+
                 // if an execution has already happened
                 // update array & subDisplay
                 if (isExecuted) {
@@ -105,8 +101,6 @@ var Calculator = (function () {
                     // push the operator string
                     array.push(str);
                     console.log("array is executed ===>", array);
-                    // update text content
-                    subDisplay.textContent = result+str.replace("/", "÷").replace("*", "×");
                 }
 
                 // turn isInit to false to fill main text content again 
@@ -114,7 +108,6 @@ var Calculator = (function () {
 
                 // turn to false so we know when an operator is cliked
                 isOperator = false;
-                    console.log("C isOperator",isOperator );
             }
 
         }
@@ -154,9 +147,6 @@ var Calculator = (function () {
     }
 
     function execute(array) {
-
-        console.log("execute ",array);
-        
 
         // happy path
         // sort operators and numbers using a dispatcher.
@@ -223,48 +213,60 @@ var Calculator = (function () {
         }
         while (i < operators.length);
 
+        console.log("------ EXECUTE ------");
+        // turn to true so we know an aperation is done
+        isExecuted = true;
+        console.log("isExecuted =", isExecuted);
+
         result = numbers[0];
 
         // rounded result options
         // 2 decimal
         result = Math.round(result * 100) / 100;
         // 3 decimal
-        //result = Math.round(result * 1000) / 1000;
+        // result = Math.round(result * 1000) / 1000;
         // 4 decimal
-        //result = Math.round(result * 10000) / 10000;
-            console.log("result =>", result);
+        // result = Math.round(result * 10000) / 10000;
+        console.log("result =>", result);
 
-        // turn to true so we know an aperation is done
-        isExecuted = true;
-            console.log("isExecuted =", isExecuted);
-
+        // if result = infinity, case number ÷ 0 
+        if (result == "Infinity" ) {       
+            result = 0;
+        }
+        // if result = NaN, case 0 ÷ 0
+        if (isNaN(result)) {
+            result = 0;
+            subDisplay.textContent = "Error";
+    
+        }
+        
         // update array
         array = [];
         array.push(result);
-
-            console.log('array result => ',array);
+        console.log('updatted array = ', array);
 
         // update main text content
         display.textContent = result;
 
         // update sub text content
         // text options               
-         subDisplay.textContent += thisBtnValue + result; // => '1+1=2'
+        subDisplay.textContent += thisBtnValue + result; // => '1+1=2'
         // subDisplay.textContent = 'answ' + thisBtnValue + result; // => 'answ=2'
-        //subDisplay.textContent += thisBtnValue; // => '1+1='
+        // subDisplay.textContent += thisBtnValue; // => '1+1='
 
         // fix display content 
         subDisplay.textContent = subDisplay.textContent.replace(".=", "=");
         subDisplay.textContent = subDisplay.textContent.replace("0.0=", "0=");
+        subDisplay.textContent = subDisplay.textContent.replace("Error=0", "Error");
 
         // return the final mathematical operation result
         return result;
 
     }
 
-    function clear(){
+    function clear() {
 
-        console.log('** Clear **');
+        console.log('------- CLEAR -------');
 
         // empty the array
         array = [];
@@ -286,18 +288,18 @@ var Calculator = (function () {
         isOperator = false;
         console.log("isOperator = ", isOperator);
 
-        // turn isExecuted to false
-        isExecuted = false;
-        console.log("isExecuted = ", isExecuted);
-
         // activate numbers keyboard
         isBtnNumActive = true;
 
         // turn isExecuted to false
         // to activate the "=" btn back
         isExecuted = false;
+        console.log("isExecuted = ", isExecuted);
 
-        console.log('*************');
+        isExecuteActive = true;
+        console.log("isExecuteActive = ", isExecuteActive);
+
+        console.log('---------------------');
 
     }
 
@@ -309,6 +311,7 @@ var Calculator = (function () {
 
             // element has data attributes 
             if ((e.target.getAttribute("data-btn-value") || e.target.getAttribute("data-btn-action"))) {
+                
                 // data attribute exist or is empty
 
                 thisBtn = e.target;
@@ -322,88 +325,131 @@ var Calculator = (function () {
                     // is key btn
                     if (attributeName == "data-btn-value") {
 
-                       
-                        // key btn is number
-                        if (thisBtnValue !== ".") {
+                        // if the array is empty and
+                        // if the first value is "0" or "."  then, the operators are first disabled
+                        if (array.length == 0 && (thisBtnValue == "0" || thisBtnValue == ".") ) {
 
-                            updateArray(thisBtnValue);
+                            isOperator = false;
+                            // deactivate decimal's btn
+                            isDecimalActive = false;
 
-                        }
-
-                        // key btn is decimal
-                        if (thisBtnValue == ".") {
-
-                            // if decimal's btn is active
-                            if (isDecimalActive) {
-
-                                // update array
-                                updateArray(thisBtnValue);
-
-                                // deactivate decimal's btn 
-                                isDecimalActive = false;
-                                console.log("isDecimalActive =", isDecimalActive);
-
-                            }
-
-                            // if first entry is decimal
-                            // remove "." update array to "0" and "."
-                            if (array[0] == ".") {
-
-                                // empty array
-                                array = [];
-
-                                // empty main text content
-                                display.textContent = "";
-
+                            // if thisBtnValue == "." then
+                            if (thisBtnValue == "."){
                                 // update array
                                 updateArray("0");
                                 updateArray(".");
+
+                                // operators are available again
+                                isOperator = true;
                             }
+
+                        } else {
+
+                            // activate execute btn
+                            isExecuteActive = true;
+
+                            // if an key btn is clicked just after an execution
+                            if (isExecuted) {
+
+                                // call clear method
+                                clear();
+                                
+                            }
+
+                            // key btn is number
+                            if (thisBtnValue !== ".") {
+
+                                updateArray(thisBtnValue);
+
+                            }
+
+                            // key btn is decimal
+                            if (thisBtnValue == ".") {
+
+                                // if decimal's btn is active
+                                if (isDecimalActive) {
+
+                                    // update array
+                                    updateArray(thisBtnValue);
+
+                                    // deactivate decimal's btn 
+                                    isDecimalActive = false;
+
+                                    console.log("isDecimalActive =", isDecimalActive);
+
+                                }
+
+                                // if first entry is decimal
+                                // remove "." update array to "0" and "."
+                                if (array[0] == ".") {
+
+                                    // empty array
+                                    array = [];
+
+                                    // empty main text content
+                                    display.textContent = "";
+
+                                    // update array
+                                    updateArray("0");
+                                    updateArray(".");
+                                }
+                            }
+
+
+                            // fix entry 
+                            // [..."+","."] => [..."+","0","."]
+                            // if the current value is "." and if the previous value is 
+                            // an operator, 0 is missing so we add it
+                            var lastOperator = array[array.length - 2];
+
+                            if ((thisBtnValue == ".") && (lastOperator == "+" || lastOperator == "*" || lastOperator == "/" || lastOperator == "-")) {
+
+                                array[array.length - 1] = "0";
+                                array.push(".");
+                                display.textContent = "0.";
+
+                                // update subDisplay.textContent
+                                subDisplay.textContent = subDisplay.textContent.replace(lastOperator + thisBtnValue, lastOperator + display.textContent);
+
+                            }
+
+                            // unlock operator btn
+                            isOperator = true;
+
                         }
 
-
-                        // fix entry 
-                        // [..."+","."] => [..."+","0","."]
-                        // if the current value is "." and if the previous value is 
-                        // an operator, 0 is missing so we add it
-                        var lastOperator = array[array.length-2];
-
-                        if ((thisBtnValue == ".") && (lastOperator == "+" || lastOperator == "*" || lastOperator == "/" || lastOperator == "-" )) {
-
-                            array[array.length-1] = 0;
-                            array.push(".");
-                            display.textContent = "0.";
-                            // update subDisplay.textContent
-                            errorString = lastOperator+thisBtnValue;
-                            fixedString = lastOperator+display.textContent; 
-                            subDisplay.textContent = subDisplay.textContent.replace(errorString, fixedString);
-                                                   
-                        }
-                        
-                        // unlock operator btn
-                        isOperator = true;
                     }
 
+                  
                     // is operator btn
                     if (attributeName == "data-btn-action") {
+                        
+                        // if Digit Limit Met 
+                        if (subDisplay.textContent == 'Digit Limit Met') {
 
+                            isOperator = false;
+
+                        }
                         // if operator's keyboard activated
                         if (isOperator) {
-
+                            
                             // if operators action
-                            if (thisBtnValue == "+" ||
-                                thisBtnValue == "*" ||
-                                thisBtnValue == "/" ||
-                                thisBtnValue == "-") {
+                            if (thisBtnValue == "+" || thisBtnValue == "*" || thisBtnValue == "/" || thisBtnValue == "-") {
 
                                 // deactivate number's keyboard
                                 isBtnNumActive = false;
 
-                                // if decimal's btn is clicked
-                                if (current == '.') {
+                                // if ["0", "."] => ["0", "operator"]
+                                if (array.length == 2 && (array[0] == "0" && array[1] == ".")) {
 
-                                    // deactivate decimal's btn
-                                    isDecimalActive = false;
+                                    array[array.length-1] = thisBtnValue;
+                                    subDisplay.textContent = "0";
+                                    display.textContent = thisBtnValue;
+                                    isInit = false;
+                                    isOperator = false;
+                                    isExecuteActive = false;
+                                    
+                                    console.log("current =>", thisBtnValue);
 
                                 } else {
 
@@ -415,18 +461,29 @@ var Calculator = (function () {
 
                                 }
 
+                                // if an operator is clicked just after an execution
+                                if (isExecuted) {
+
+                                    // reference existing result in new variable
+                                    var lastResult = result;
+
+                                    // call clear method
+                                    clear();
+
+                                    // update the array
+                                    updateArray(lastResult.toString());
+                                    updateArray(thisBtnValue);
+
+                                }
+
                             }
 
 
-                            
-                            // calculate action
-                            if (thisBtnValue == "=") {
+                            // if calculate action && calculate btn is active
+                            if (thisBtnValue == "=" && isExecuteActive == true) {
 
-
-                                //if (!isExecuted) {}
                                 // activate decimal's btn
                                 isDecimalActive = true;
-                                console.log("isDecimalActive = ", isDecimalActive);
 
                                 // deactivate number's keyboard
                                 isBtnNumActive = false;
@@ -434,38 +491,39 @@ var Calculator = (function () {
                                 // calculate the result
                                 result = execute(arrayConverter(array));
 
-                                // deactivate this btn to prevent multiple "====="
+                                // an execution has happened
                                 isExecuted = true;
 
-                                
+                                // deactivate this btn to prevent multiple "="
+                                isExecuteActive = false;
+
+                                console.log("isExecuteActive = ", isExecuteActive);
+                                console.log("---------------------");
+
                             }
                         } //
 
 
-                        // clear action|| isBtnNumActive == false
+                        // clear action 
                         if (thisBtnValue == "clear") {
 
                             // update both main and sub text content
                             subDisplay.textContent = "0";
                             display.textContent = "0";
 
+                            // call clear method
                             clear();
-
-
                         }
 
-
-
                     }
+
+                    // fix displayed characters
+                    display.textContent = display.textContent.replace("/", "÷").replace("*", "×");
+                    subDisplay.textContent = subDisplay.textContent.replace(".+", "+").replace(".-", "-").replace(".÷", "÷").replace(".×", "×");
 
                 }
 
             } // end listener
-
-            // console.log('** Any Btn **');
-            // console.log("isDecimalActive =", isDecimalActive);
-            // console.log('array => ',array);
-            // console.log('*************');
 
         })
 
