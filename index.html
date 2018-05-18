@@ -61,5 +61,22 @@
             Calculator.init();
         })();
     </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <!-- <script type="text/javascript">
+        $(document).ready(function() {
+            $(".btn").click(function(e) {
+                var parentOffset = $(this).offset(),
+                    cursorX      = e.pageX - parentOffset.left,
+                    cursorY      = e.pageY - parentOffset.top;
+
+                    console.log("parentOffset",parentOffset);
+
+                $(this).children(".ripple").remove();
+                $(this).append("<div class=\"ripple\"></div>");
+                $(this).children(".ripple").css({"left" : cursorX + "px", "top" : cursorY + "px"});
+
+            });
+        });
+    </script> -->
 </body>
 </html>

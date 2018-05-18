@@ -1,13 +1,12 @@
 
-$ripple-speed : .2s;
-$ripple-size : 2px;
+$ripple-speed : .5s;
+$ripple-size : 1px;
 $ripple-transform: scale(165);
 $ripple-name: ripple;
 
 .ripple {
     position: absolute;
     opacity: 0;
-    border-radius: 50%;
     width: $ripple-size;
     height: $ripple-size;
     background-color: rgb(0, 199, 0);

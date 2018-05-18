@@ -309,11 +309,49 @@ var Calculator = (function () {
 
     }
 
+    // offset position
+    function offset(elt) {
+        var rect = elt.getBoundingClientRect(), bodyElt = document.body;
+        return {
+            top: rect.top + bodyElt .scrollTop,
+            left: rect.left + bodyElt .scrollLeft
+        }
+    }
+
+    // Ripple effect
+    function ripple(thisBtn, ePageX, ePageY) {
+    
+        var offsetElt = offset(thisBtn),
+        cursorX = (ePageX + 5) - offsetElt.left,
+        cursorY  = (ePageY + 5) - offsetElt.top,
+        thisRipple = thisBtn.children[0];
+
+        // create element
+        node = document.createElement("div");
+        // add class ripple
+        node.className += "ripple"; 
+
+        // if children exists remove it
+        if (thisBtn.children.length > 0) {
+            thisBtn.removeChild(thisRipple);
+        }
+
+        // add ripple element
+        thisBtn.appendChild(node); 
+        
+        // ch
+        thisBtn.children[0].style.left = cursorX + "px";
+        thisBtn.children[0].style.top = cursorY + "px";
+
+    
+    }
+
     // public method
     self.init = function () {
 
         // EventListener
         calculator.addEventListener('click', function (e) {
+
 
             // element has data attributes 
             if ((e.target.getAttribute("data-btn-value") || e.target.getAttribute("data-btn-action"))) {
@@ -324,6 +362,11 @@ var Calculator = (function () {
                 attributeName = thisBtn.attributes[1].name;
                 thisBtnValue = thisBtn.getAttribute(attributeName);
                 isBtn = thisBtn.classList["0"];
+
+                console.log(e.pageX);
+
+                ripple(thisBtn, e.pageX, e.pageY);
+
 
                 // is btn        
                 if (isBtn == "btn") {
