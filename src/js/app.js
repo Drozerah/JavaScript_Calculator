@@ -20,7 +20,6 @@ var Calculator = (function () {
         current,
         result;
 
-
     // fix onfocus issue
     calculator.onfocus = function () {
 
@@ -28,7 +27,7 @@ var Calculator = (function () {
 
     };
 
-    // private method
+    // update array
     function updateArray(str) {
 
 
@@ -118,7 +117,8 @@ var Calculator = (function () {
         }
 
     }
-
+    
+    // convert strings
     function arrayConverter(array) {
 
         // convert the indexes from strings to numbers 
@@ -151,6 +151,7 @@ var Calculator = (function () {
 
     }
 
+    // execute mathematical operations
     function execute(array) {
 
         // sort operators and numbers using kind of a dispatcher.
@@ -270,6 +271,7 @@ var Calculator = (function () {
 
     }
 
+    // clear data
     function clear() {
 
         console.log('------- CLEAR -------');
@@ -347,7 +349,7 @@ var Calculator = (function () {
         thisBtn.children[0].style.top = cursorY + "px";   
     }
 
-    // public method
+    // Init Caculator
     self.init = function () {
 
         // EventListener
