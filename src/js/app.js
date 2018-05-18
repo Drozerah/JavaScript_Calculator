@@ -256,9 +256,9 @@ var Calculator = (function () {
 
         // update sub text content
         // text options               
-        subDisplay.textContent += thisBtnValue + result; // => '1+1=2'
+        //subDisplay.textContent += thisBtnValue + result; // => '1+1=2'
         // subDisplay.textContent = 'answ' + thisBtnValue + result; // => 'answ=2'
-        // subDisplay.textContent += thisBtnValue; // => '1+1='
+         subDisplay.textContent += thisBtnValue; // => '1+1='
 
         // fix display content 
         subDisplay.textContent = subDisplay.textContent.replace(".=", "=");
