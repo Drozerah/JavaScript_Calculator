@@ -18,13 +18,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 * {
     user-select: none;
 }
 
-#main {
+main {
     background-color: #E7E7E7;
     width: 400px;
     padding: 5px;
@@ -95,3 +96,11 @@ body {
 .action {
     font-size: 38px;
 }
+
+footer{
+    margin-top: 40px;
+    font-size: 16px;
+    font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+}
+
+@import "_drozerah.scss";
