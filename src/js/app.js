@@ -328,22 +328,23 @@ var Calculator = (function () {
 
         // create element
         node = document.createElement("div");
+
         // add class ripple
         node.className += "ripple"; 
 
-        // if children exists remove it
+        // if children already exists then remove it
         if (thisBtn.children.length > 0) {
+
             thisBtn.removeChild(thisRipple);
+
         }
 
         // add ripple element
         thisBtn.appendChild(node); 
         
-        // ch
+        // added children position
         thisBtn.children[0].style.left = cursorX + "px";
-        thisBtn.children[0].style.top = cursorY + "px";
-
-    
+        thisBtn.children[0].style.top = cursorY + "px";   
     }
 
     // public method
@@ -363,10 +364,8 @@ var Calculator = (function () {
                 thisBtnValue = thisBtn.getAttribute(attributeName);
                 isBtn = thisBtn.classList["0"];
 
-                console.log(e.pageX);
-
+                // apply ripple effect
                 ripple(thisBtn, e.pageX, e.pageY);
-
 
                 // is btn        
                 if (isBtn == "btn") {
