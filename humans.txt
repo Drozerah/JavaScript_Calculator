@@ -1,0 +1,15 @@
+/* TEAM */
+
+Developer: Thomas G.
+                            
+GitHub: https://github.com/Drozerah
+                         
+Location: France
+                                        
+/* SITE */
+                           
+Last update: 2018/05/18
+                            
+Standards: HTML5/CSS3/SCSS/VanillaJS 
+                            
+Software: VScode, Gulp, Git
