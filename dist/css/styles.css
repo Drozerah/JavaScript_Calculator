@@ -1,0 +1,179 @@
+/* Page */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.ripple {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  background-color: #00c700;
+  animation-duration: 0.5s;
+  animation-name: ripple; }
+
+@keyframes ripple {
+  0% {
+    opacity: 1; }
+  100% {
+    transform: scale(165); } }
+
+html, body {
+  height: 100%;
+  padding: 0px;
+  margin: 0px; }
+
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color: #f8f8f8;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-direction: column;
+      flex-direction: column; }
+
+* {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+main {
+  background-color: #E7E7E7;
+  width: 400px;
+  padding: 5px;
+  height: 615px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
+
+/* Calculator */
+#calculator {
+  font-size: 30px;
+  line-height: 100px; }
+  #calculator li.btn {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    background-color: lime;
+    overflow: hidden; }
+    #calculator li.btn:hover {
+      background-color: #02e902;
+      cursor: pointer;
+      color: #FFF; }
+    #calculator li.btn::-moz-selection {
+      background-color: transparent; }
+    #calculator li.btn::selection {
+      background-color: transparent; }
+  #calculator li:nth-child(3) {
+    font-size: 28px; }
+  #calculator li:nth-child(4) {
+    width: 400px;
+    font-size: 20px;
+    color: #a09f9f;
+    text-align: center; }
+    #calculator li:nth-child(4) span {
+      padding: 10px; }
+  #calculator #display {
+    text-align: right;
+    padding-right: 40px;
+    font-size: 40px;
+    height: 80px;
+    line-height: 80px;
+    background-color: #E7E7E7; }
+  #calculator #sub-display {
+    text-align: right;
+    padding-right: 44px;
+    font-size: 25px;
+    height: 25px;
+    line-height: 25px;
+    color: #333;
+    margin-bottom: 12px; }
+  #calculator li:nth-child(18) {
+    font-size: 50px;
+    line-height: 86px; }
+
+.action {
+  font-size: 38px; }
+
+footer {
+  margin-top: 30px;
+  font-size: 16px;
+  font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif; }
+
+/* DROZERAH */
+.drozerah {
+  text-decoration: none;
+  color: #333; }
+
+.drozerah svg {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: -2px; }
+
+.drozerah path {
+  fill: #6a1b9a;
+  fill-rule: evenodd; }
+
+.drozerah span {
+  display: inline-block;
+  color: #6a1b9a; }
+
+.drozerah:hover path {
+  fill: purple; }
+
+.drozerah:hover span {
+  color: purple; }
